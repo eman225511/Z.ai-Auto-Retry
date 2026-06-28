@@ -23,6 +23,7 @@ When Z.ai displays the **"Currently in peak hours"** popup, this script will:
 ## Installation
 
 ### Bookmarklet
+The code is in `bookmark.js`
 
 1. Open the included `index.html` page.
 2. Drag the **"Z.ai Auto Retry"** button to your bookmarks bar.
@@ -32,6 +33,7 @@ When Z.ai displays the **"Currently in peak hours"** popup, this script will:
 Click the bookmark again to disable it.
 
 ### Console
+The code is in `console.js`
 
 You can also paste the script directly into your browser's developer console.
 
