@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Z.ai Auto Retry</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: Inter, system-ui, sans-serif;
+            background: linear-gradient(135deg, #0f172a, #1e293b);
+            color: white;
+        }
+
+        .card {
+            width: 90%;
+            max-width: 650px;
+            background: rgba(255,255,255,.08);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255,255,255,.1);
+            border-radius: 24px;
+            padding: 40px;
+            text-align: center;
+            box-shadow: 0 20px 60px rgba(0,0,0,.3);
+        }
+
+        h1 {
+            margin-top: 0;
+            font-size: 2.5rem;
+        }
+
+        p {
+            color: rgba(255,255,255,.8);
+            line-height: 1.7;
+        }
+
+        .bookmark {
+            display: inline-block;
+            margin: 30px 0;
+            padding: 18px 32px;
+            border-radius: 14px;
+            text-decoration: none;
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: white;
+            background: linear-gradient(135deg,#2563eb,#3b82f6);
+            box-shadow: 0 8px 30px rgba(37,99,235,.4);
+            transition: .2s ease;
+        }
+
+        .bookmark:hover {
+            transform: translateY(-3px);
+        }
+
+        .features {
+            text-align: left;
+            margin: 30px auto;
+            max-width: 400px;
+        }
+
+        .features li {
+            margin: 12px 0;
+        }
+
+        .footer {
+            margin-top: 30px;
+            color: rgba(255,255,255,.6);
+            font-size: .9rem;
+        }
+    </style>
+</head>
+<body>
+
+<div class="card">
+
+    <h1>🤖 Z.ai Auto Retry</h1>
+
+    <p>
+        Automatically closes the GLM-5.2 peak hours popup and retries your message.
+    </p>
+
+    <a class="bookmark" id="bookmarklet-link" href="#">
+    Drag Me To Your Bookmarks Bar
+    </a>
+
+    <script>
+    const bookmarklet = `javascript:(()=>{if(window.zaiAutoRetryObserver){window.zaiAutoRetryObserver.disconnect();delete window.zaiAutoRetryObserver;delete window.zaiAutoRetryBusy;const t=document.createElement("div");t.textContent="🛑 Z.ai Auto Retry Stopped";Object.assign(t.style,{position:"fixed",top:"20px",right:"20px",background:"#d32f2f",color:"#fff",padding:"12px 18px",borderRadius:"8px",zIndex:999999,fontFamily:"sans-serif",fontSize:"14px"});document.body.appendChild(t);setTimeout(()=>t.remove(),3000);console.log("[Z.ai Auto Retry] Stopped");return;}function toast(msg,bg="#333"){const t=document.createElement("div");t.textContent=msg;Object.assign(t.style,{position:"fixed",top:"20px",right:"20px",background:bg,color:"#fff",padding:"12px 18px",borderRadius:"8px",zIndex:999999,fontFamily:"sans-serif",fontSize:"14px",boxShadow:"0 2px 8px rgba(0,0,0,.3)"});document.body.appendChild(t);setTimeout(()=>t.remove(),3000);}window.zaiAutoRetryBusy=false;const sleep=ms=>new Promise(r=>setTimeout(r,ms));async function handlePopup(){if(window.zaiAutoRetryBusy)return;const dialog=[...document.querySelectorAll('[role="dialog"]')].find(d=>d.textContent.includes('Currently in peak hours')&&d.textContent.includes('GLM-5.2'));if(!dialog)return;window.zaiAutoRetryBusy=true;console.log("[Z.ai Auto Retry] Peak popup detected");toast("🔄 Retrying...","#1976d2");const closeBtn=dialog.querySelector('[data-dialog-close]');if(closeBtn){console.log("[Z.ai Auto Retry] Closing popup");closeBtn.click();}let attempts=0;while(attempts<60){const sendBtn=document.querySelector('#send-message-button');if(sendBtn&&!sendBtn.disabled&&sendBtn.offsetParent!==null){console.log("[Z.ai Auto Retry] Clicking send button");sendBtn.click();console.log("[Z.ai Auto Retry] Retry sent");break;}attempts++;await sleep(1000);}window.zaiAutoRetryBusy=false;}window.zaiAutoRetryObserver=new MutationObserver(handlePopup);window.zaiAutoRetryObserver.observe(document.body,{childList:true,subtree:true});toast("✅ Z.ai Auto Retry Started","#2e7d32");console.log("[Z.ai Auto Retry] Started");})();`;
+
+    document.getElementById("bookmarklet-link").href = bookmarklet;
+    </script>
+
+    <div class="features">
+        <ul>
+            <li>✅ Automatically closes the peak hours popup</li>
+            <li>🔄 Retries messages automatically</li>
+            <li>🔔 Toast notifications</li>
+            <li>📝 Console logging</li>
+            <li>🔁 Click again to stop</li>
+        </ul>
+    </div>
+
+    <div class="footer">
+        Drag the button above to your bookmarks bar, then click it while on Z.ai.
+    </div>
+
+</div>
+
+</body>
+</html>
